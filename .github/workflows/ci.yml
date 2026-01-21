@@ -1,29 +1,18 @@
-name: Node.js CI   # Workflow ka naam – GitHub pe Actions tab mein yeh dikhega
-on:                # Kab chalega workflow?
-  push:            # Jab koi code push karega (main branch pe)
-    branches: [ main ]
-  pull_request:    # Jab koi PR banayega ya update karega (main pe)
-    branches: [ main ]
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
 
-jobs:              # Workflow mein jobs (parallel chal sakte hain)
-  build-and-test:  # Job ka naam (ek job hai yahan)
-    runs-on: ubuntu-latest   # GitHub ka Ubuntu VM pe chalega (fast aur cheap)
-    strategy:                # Multiple runs ke liye matrix
-      matrix:
-        node-version: [20.x, 22.x]  # 2 jobs chalenge – ek Node 20 pe, ek 22 pe
-    steps:               # Job ke andar steps (sequence mein chalte hain)
-    - name: Checkout code
-      uses: actions/checkout@v4   # GitHub se code clone karta hai runner pe
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}  # Matrix se version le lega
-        cache: 'npm'         # npm cache karega (node_modules fast load)
-    - name: Install dependencies
-      run: npm ci            # Clean install (CI ke liye best – package-lock se exact)
-    - name: Run lint (if you have ESLint)
-      run: npm run lint      # Agar lint setup hai toh chalega, warna comment kar do
-    - name: Build TypeScript
-      run: npm run build     # tsc chalega – TS to JS compile
-    - name: Run tests
-      run: npm test          # Vitest chalega (tumhara "vitest run")
+  - name: Setup Node.js ${{ matrix.node-version }}
+    uses: actions/setup-node@v4
+    with:
+      node-version: ${{ matrix.node-version }}
+      cache: 'npm'
+
+  - name: Install dependencies
+    run: npm ci
+
+  - name: Build TypeScript
+    run: npm run build
+
+  - name: Run tests
+    run: npm test
