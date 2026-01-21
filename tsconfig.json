@@ -2,9 +2,9 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": ".",
+    "rootDir": "./src",
     "outDir": "./dist",
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -21,8 +21,8 @@
 
     // Other Outputs
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+    "declaration": false,
+    "declarationMap": false,
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
@@ -49,16 +49,17 @@
     "forceConsistentCasingInFileNames": true,
 
     "allowJs": true,  
-    "noEmit": true
+    "noEmit": false
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.test.ts",
-    "src/config/vitest.config.ts" 
+    // "src/**/*.test.ts",
+    // "src/config/vitest.config.ts" 
   ],
 
   "exclude": [
     "node_modules",
-    "dist"
+    "**/*.test.ts",                     
+    "src/config/vitest.config.ts"      
   ]
 }
