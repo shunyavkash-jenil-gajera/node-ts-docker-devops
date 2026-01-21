@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from './app'; 
+import app from './app.ts'; 
 
 describe('GET /', () => {
   it('should return hello message', async () => {
