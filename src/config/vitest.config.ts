@@ -6,7 +6,16 @@ export default defineConfig({
   test: {
     globals: true,  
     environment: 'node',  
-    include: ['src/**/*.test.ts'],  
-   
+    include: ['src/**/*.test.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html', 'lcov'],
+      exclude: [
+        'node_modules/',
+        'dist/',
+        'src/**/*.test.ts',
+        'src/config/',
+      ],
+    },
   },
 });
