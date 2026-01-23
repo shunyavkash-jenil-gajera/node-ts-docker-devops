@@ -20,105 +20,105 @@
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                 ROUTES (src/routes/)                            │
-│                                                                  │
-│  GET  /auth/profile    ──▶ verifyToken middleware             │
-│  POST /auth/login      ──▶ (no middleware - public)            │
-│  POST /auth/signup     ──▶ (no middleware - public)            │
-│  POST /auth/logout     ──▶ verifyToken middleware             │
+│                                                                 │
+│  GET  /auth/profile    ──▶ verifyToken middleware               │
+│  POST /auth/login      ──▶ (no middleware - public)             │
+│  POST /auth/signup     ──▶ (no middleware - public)             │
+│  POST /auth/logout     ──▶ verifyToken middleware               │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │         MIDDLEWARE (src/middleware/auth.middleware.ts)          │
-│                                                                  │
+│                                                                 │
 │  verifyToken:                                                   │
-│  1. Extract Bearer token from Authorization header             │
-│  2. Call authService.verifyToken()                             │
-│  3. Attach user to request object                              │
-│  4. Call next() or return 401 error                            │
+│  1. Extract Bearer token from Authorization header              │
+│  2. Call authService.verifyToken()                              │
+│  3. Attach user to request object                               │
+│  4. Call next() or return 401 error                             │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │         CONTROLLERS (src/controllers/auth.controller.ts)        │
-│                                                                  │
+│                                                                 │
 │  signup(req, res):                                              │
-│    1. Extract email, password from req.body                    │
-│    2. Call authService.signUp()                                │
-│    3. Catch errors and call SendResponse()                     │
-│                                                                  │
+│    1. Extract email, password from req.body                     │
+│    2. Call authService.signUp()                                 │
+│    3. Catch errors and call SendResponse()                      │
+│                                                                 │
 │  login(req, res):                                               │
-│    1. Extract credentials from req.body                        │
-│    2. Call authService.login()                                 │
-│    3. Return user + tokens via SendResponse()                  │
-│                                                                  │
+│    1. Extract credentials from req.body                         │
+│    2. Call authService.login()                                  │
+│    3. Return user + tokens via SendResponse()                   │
+│                                                                 │
 │  getProfile(req, res):                                          │
-│    1. Extract user ID from req.user (set by middleware)        │
-│    2. Call authService.getUserById()                           │
-│    3. Return user data via SendResponse()                      │
-│                                                                  │
+│    1. Extract user ID from req.user (set by middleware)         │
+│    2. Call authService.getUserById()                            │
+│    3. Return user data via SendResponse()                       │
+│                                                                 │
 │  logout(req, res):                                              │
-│    1. Call authService.logout()                                │
-│    2. Return success message via SendResponse()                │
+│    1. Call authService.logout()                                 │
+│    2. Return success message via SendResponse()                 │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │         SERVICES (src/services/auth.service.ts)                 │
-│                                                                  │
+│                                                                 │
 │  AuthService (Singleton):                                       │
-│    - signUp(payload): Create user via Supabase Auth            │
-│    - login(payload): Authenticate user                         │
-│    - logout(): Sign out user                                   │
-│    - getUserById(id): Fetch user by ID                         │
-│    - verifyToken(token): Validate JWT token                    │
-│                                                                  │
+│    - signUp(payload): Create user via Supabase Auth             │
+│    - login(payload): Authenticate user                          │
+│    - logout(): Sign out user                                    │
+│    - getUserById(id): Fetch user by ID                          │
+│    - verifyToken(token): Validate JWT token                     │
+│                                                                 │
 │  All methods interact with Supabase client                      │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │      SUPABASE CLIENT (src/config/supabase.config.ts)            │
-│                                                                  │
+│                                                                 │
 │  createClient(SUPABASE_URL, SUPABASE_KEY)                       │
-│    ├── supabase.auth.signUp()                                  │
-│    ├── supabase.auth.signInWithPassword()                      │
-│    ├── supabase.auth.signOut()                                 │
-│    ├── supabase.auth.getUser()                                 │
-│    └── supabase.auth.admin.getUserById()                       │
+│    ├── supabase.auth.signUp()                                   │
+│    ├── supabase.auth.signInWithPassword()                       │
+│    ├── supabase.auth.signOut()                                  │
+│    ├── supabase.auth.getUser()                                  │
+│    └── supabase.auth.admin.getUserById()                        │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │              SUPABASE BACKEND (Cloud)                           │
-│                                                                  │
+│                                                                 │
 │  - User authentication                                          │
 │  - JWT token generation                                         │
-│  - Session management                                          │
-│  - Metadata storage                                            │
+│  - Session management                                           │
+│  - Metadata storage                                             │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │            RESPONSE via SendResponse()                          │
 │         (src/handlers/responce.handler.ts)                      │
-│                                                                  │
+│                                                                 │
 │  {                                                              │
-│    "code": 200,                                                │
-│    "success": true,                                            │
-│    "message": "Success message",                               │
-│    "data": { /* response data */ }                             │
+│    "code": 200,                                                 │
+│    "success": true,                                             │
+│    "message": "Success message",                                │
+│    "data": { /* response data */ }                              │
 │  }                                                              │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │              ERROR HANDLING                                     │
-│                                                                  │
-│  Unhandled errors → globalErrorHandler middleware              │
-│  → SendResponse() with standardized error format               │
-│                                                                  │
-│  (src/handlers/globleError.handler.ts)                         │
+│                                                                 │
+│  Unhandled errors → globalErrorHandler middleware               │
+│  → SendResponse() with standardized error format                │
+│                                                                 │
+│  (src/handlers/globleError.handler.ts)                          │
 └────────────────────────┬────────────────────────────────────────┘
                          │
                          ▼
